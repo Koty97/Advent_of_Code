@@ -1,4 +1,4 @@
-file1 = open('C:\\Users\\adminpk\\PycharmProjects\\advent_of_code\\2\\input.txt', 'r')
+file1 = open('/2020/2/input.txt', 'r')
 Lines = file1.readlines()
 
 count = 0

@@ -1,4 +1,4 @@
-file1 = open('C:\\Users\\adminpk\\PycharmProjects\\advent_of_code\\4\\input.txt', 'r')
+file1 = open('/2020/4/input.txt', 'r')
 
 # count = 0
 # ar=[]
