@@ -1,25 +1,4 @@
-def is_winning_board(board):
-    winning_line = len(board) * ["X"]
-    for line in board:
-        if line == winning_line:
-            return True
-    for x in range(0, len(board)):
-        column = []
-        for line in board:
-            column.append(line[x])
-        if column == winning_line:
-            return True
-        column = []
-    return False
-
-
-def get_board_result(board, called_number):
-    result = 0
-    for line in board:
-        for number in line:
-            if number != "X":
-                result = result + int(number)
-    return result * int(called_number)
+import helper
 
 
 def first():
@@ -42,8 +21,8 @@ def first():
             for line in board:
                 if number in line:
                     line[line.index(number)] = "X"
-            if is_winning_board(board):
-                print(get_board_result(board, number))
+            if helper.is_winning_board(board):
+                print(helper.get_board_result(board, number))
                 return 0
 
 
@@ -67,12 +46,12 @@ def second():
             for line in board:
                 if number in line:
                     line[line.index(number)] = "X"
-            if is_winning_board(board):
+            if helper.is_winning_board(board):
                 if len(matrix) != 1:
                     matrix.remove(board)
                     drawn_numbers.insert(drawn_numbers.index(number), number)
                 else:
-                    print(get_board_result(board, number))
+                    print(helper.get_board_result(board, number))
                     return 0
 
 

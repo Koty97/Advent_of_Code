@@ -23,3 +23,29 @@ def get_most_common(line_list, position):
         return 1
     else:
         return 1
+
+
+# For Day 4
+def is_winning_board(board):
+    winning_line = len(board) * ["X"]
+    for line in board:
+        if line == winning_line:
+            return True
+    for x in range(0, len(board)):
+        column = []
+        for line in board:
+            column.append(line[x])
+        if column == winning_line:
+            return True
+        column = []
+    return False
+
+
+# For Day 4
+def get_board_result(board, called_number):
+    result = 0
+    for line in board:
+        for number in line:
+            if number != "X":
+                result = result + int(number)
+    return result * int(called_number)
