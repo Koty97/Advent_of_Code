@@ -1,4 +1,15 @@
-import helper
+def get_most_common(line_list, position):
+    num_of_steps = 0
+    value = 0
+    for line in line_list:
+        value = value + int(line[position])
+        num_of_steps = num_of_steps + 1
+    if value < num_of_steps / 2:
+        return 0
+    elif value > num_of_steps / 2:
+        return 1
+    else:
+        return 1
 
 
 def first():
@@ -34,7 +45,7 @@ def second():
             length = len(line)
             line_list.append(line.replace("\n", ""))
         for x in range(0, length):
-            most_common = str(helper.get_most_common(line_list, x))
+            most_common = str(get_most_common(line_list, x))
             if n == 0:
                 most_common = "0" if most_common == "1" else "1"
             if len(line_list) > 1:
