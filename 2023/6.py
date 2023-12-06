@@ -34,7 +34,6 @@ def second(verbose=False):
     for x in range(0, time):
         if verbose: print(
             "With holding button for {}ms I could travel {}mm".format(x, (time - x) * x))
-        if verbose: print("Comparing ")
         if (time - x) * x > distance:
             if verbose: print("\tThis is better strategy")
             summary = summary + 1
