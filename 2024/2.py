@@ -31,8 +31,8 @@ def first(verbose=False):
 def second(verbose=False):
     file = open("2.input", "r")
     summary = 0
-    failed=0
-    tries=0
+    failed = 0
+    tries = 0
     for line in file:
         numbers = list(map(int, line.strip().split(" ")))
         is_ok = True
@@ -58,18 +58,26 @@ def second(verbose=False):
                 if verbose: print("\tNew row {}".format(new_numbers, is_ok))
                 if new_numbers == sorted(new_numbers) or new_numbers == sorted(new_numbers, reverse=True):
                     if verbose: print("\t\tNew row succeeded first test.")
-                    failed_tries=0
+                    failed_tries = 0
                     for i in range(0, len(new_numbers)):
                         if 0 < i < len(new_numbers):
                             if verbose: print(
-                                "\t\tChecking if number {} is 1-3 away: {}, change was {}".format(new_numbers[i], 0 < abs(
-                                    int(new_numbers[i]) - int(new_numbers[i - 1])) < 4, abs(
-                                    int(new_numbers[i]) - int(new_numbers[i - 1]))))
+                                "\t\tChecking if number {} is 1-3 away: {}, change was {}".format(new_numbers[i],
+                                                                                                  0 < abs(
+                                                                                                      int(new_numbers[
+                                                                                                              i]) - int(
+                                                                                                          new_numbers[
+                                                                                                              i - 1])) < 4,
+                                                                                                  abs(
+                                                                                                      int(new_numbers[
+                                                                                                              i]) - int(
+                                                                                                          new_numbers[
+                                                                                                              i - 1]))))
                             if (0 < abs(int(new_numbers[i]) - int(new_numbers[i - 1])) < 4) is False:
-                                failed_tries=failed_tries+1
-                    if failed_tries==0:
+                                failed_tries = failed_tries + 1
+                    if failed_tries == 0:
                         if verbose: print("\t\tException managed successfully\n")
-                        is_ok=True
+                        is_ok = True
                         break
         if verbose: print("\tNumber row {} is {}\n".format(numbers, is_ok))
         summary = summary + int(is_ok)
@@ -77,4 +85,4 @@ def second(verbose=False):
 
 
 print("Result of Day {} Part 1: {}".format(current_day, first()))
-print("Result of Day {} Part 2: {}".format(current_day, second(True)))
+print("Result of Day {} Part 2: {}".format(current_day, second()))
