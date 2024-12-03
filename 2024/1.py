@@ -1,4 +1,5 @@
 import os.path
+from time import perf_counter
 
 current_day = os.path.basename(__file__.split(".")[0])
 
@@ -39,5 +40,8 @@ def second(verbose=False):
     return summary
 
 
+time_start = perf_counter()
 print("Result of Day {} Part 1: {}".format(current_day, first()))
 print("Result of Day {} Part 2: {}".format(current_day, second()))
+time_end = perf_counter()
+print(f'Took {time_end - time_start} seconds')
