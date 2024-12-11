@@ -64,20 +64,38 @@ def second(verbose=False):
         matrix.append(line_matrix)
         i = i + 1
     print(antennas)
-    max_size=49
+    max_size=10
     for key,value in antennas.items():
         perm = combinations(value,2)
         for i in perm:
             distance=get_nodes_distance(i[0],i[1])
-
+            print("Distance {}".format(distance))
             if 0<=i[0][0]-distance[0]<=max_size and 0<=i[0][1]-distance[1]<=max_size and antinodes.count([i[0][0]-distance[0],i[0][1]-distance[1]])==0:
                 antinodes.append([i[0][0]-distance[0],i[0][1]-distance[1]])
-                i=[i[0][0]-distance[0],i[0][1]-distance[1]]
-                #print("Apeending antinode {} for {}".format([i[0][0]-distance[0],i[0][1]-distance[1]], key))
-            if 0<=i[1][0]+distance[0] <= max_size and 0<=i[1][1]+distance[1] <= max_size and antinodes.count([i[1][0]+distance[0],i[1][1]+distance[1]])==0:
+                new_node=[i[0][0]-distance[0],i[0][1]-distance[1]]
+                while 0<=new_node[0]<=max_size and 0<=new_node[1]<max_size:
+                    if antinodes.count(new_node)==0:
+                        antinodes.append(new_node)
+                    new_node=[new_node[0]-distance[0],new_node[1]-distance[1]]
+                new_node=[i[0][0]+distance[0],i[0][1]+distance[1]]
+                while 0<=new_node[0]<=max_size and 0<=new_node[1]<max_size:
+                    if antinodes.count(new_node)==0:
+                        antinodes.append(new_node)
+                    new_node=[new_node[0]+distance[0],new_node[1]+distance[1]]
+                print("Apeending antinode {} for {}".format([i[0][0]-distance[0],i[0][1]-distance[1]], key))
+            if 0<=i[1][0]+distance[0] < max_size and 0<=i[1][1]+distance[1] <= max_size and antinodes.count([i[1][0]+distance[0],i[1][1]+distance[1]])==0:
                 antinodes.append([i[1][0]+distance[0],i[1][1]+distance[1]])
-                i=[i[1][0]+distance[0],i[1][1]+distance[1]]
-                #print("Apeending antinode {} for {}".format([i[1][0]+distance[0],i[1][1]+distance[1]],key))
+                new_node=[i[1][0]+distance[0],i[1][1]+distance[1]]
+                while 0<=new_node[0]<max_size and 0<=new_node[1]<max_size:
+                    if antinodes.count(new_node)==0:
+                        antinodes.append(new_node)
+                    new_node=[new_node[0]+distance[0],new_node[1]+distance[1]]
+                new_node = [i[1][0] - distance[0], i[1][1] - distance[1]]
+                while 0<=new_node[0]<max_size and 0<=new_node[1]<max_size:
+                    if antinodes.count(new_node)==0:
+                        antinodes.append(new_node)
+                    new_node=[new_node[0]-distance[0],new_node[1]-distance[1]]
+                print("Apeending antinode {} for {}".format([i[1][0]+distance[0],i[1][1]+distance[1]],key))
     print(antinodes)
     return len(antinodes)
 
