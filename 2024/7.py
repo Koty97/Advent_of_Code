@@ -13,12 +13,12 @@ def first(verbose=False):
     summary = 0
     y=0
     for line in file:
-        print("Processing {}".format(y))
+        if verbose: print("Processing {}".format(y))
         y=y+1
         result = int(line.strip().split(":")[0])
         numbers = line.strip().split(":")[1].strip().split(" ")
         if verbose: print("Number array:".format(numbers))
-        comb = combinations([operator.add, operator.mul] * (len(numbers) - 1), len(numbers) - 1)
+        comb = list(product([operator.mul, operator.add], repeat=len(numbers) - 1))
         comb_list = []
         for i in list(comb):
             if i not in comb_list: comb_list.append(i)
@@ -42,56 +42,41 @@ def second(verbose=False):
     file = open("7.input", "r")
     summary = 0
     y = 0
+    lines=[]
     for line in file:
-        print("Processing {}".format(y))
-        y = y + 1
+        lines.append(line.strip())
+    file.close()
+    lines=sorted(lines,key=len)
+    for y,line in enumerate(lines):
+        if verbose: print("Processing {}".format(y))
         result = int(line.strip().split(":")[0])
         numbers = line.strip().split(":")[1].strip().split(" ")
-        if verbose: print("Number array:".format(numbers))
-        comb = combinations([operator.mul,operator.add,concatenation] * (len(numbers) - 1), len(numbers) - 1)
-        comb_list = []
-        for i in list(comb):
-            if i not in comb_list: comb_list.append(i)
-        for var in comb_list:
-            equation=numbers.copy()
-            index=1
-            for operation in var:
-                equation.insert(index,operation)
-                index=index+2
-            if verbose: print("\teq={}".format(equation))
-            if concatenation in var:
-                for i,element in enumerate(equation):
-                    if element == operator.mul or element == operator.add or element==concatenation:
-                        equation.insert(i+1,element(int(equation[i-1]),int(equation[i+1])))
-                        try:
-                            equation.pop(i + 2)
-                        except:
-                            pass
-                if verbose: print("\tResult is {}".format(equation[len(equation)-1]))
-                is_ok = result == equation[len(equation)-1]
-                if is_ok:
-                    summary=summary+result
-                    if verbose: print("\tAdding summ")
-                    break
-            else:
-                index = 0
-                summ = int(numbers[index])
-                for operation in var:
-                    summ = operation(summ, int(numbers[index + 1]))
-                    index = index + 1
-                if verbose: print("\tFor var {} result is {}".format(var, summ))
-                is_ok = result == summ
-                if is_ok:
-                    summary = summary + result
-                    if verbose: print("\tAdding summ")
-                    break
-            pass
-    file.close()
+        if verbose: print("Number array: {} with result {}".format(numbers, result))
+        comb_list = list(product([operator.mul, operator.add, concatenation], repeat=len(numbers) - 1))
+        for i, combination in enumerate(comb_list):
+            equation = list(chain.from_iterable(zip(numbers, list(combination))))
+            equation.append(numbers[-1])
+            index = 0
+            for j, element in enumerate(equation):
+                if not str(element).isnumeric():
+                    if verbose: print(
+                        "\tOperation {} between {} and {} results {}".format(element, index, equation[j + 1],
+                                                                             element(int(index), int(equation[j + 1]))))
+                    index = element(int(index), int(equation[j + 1]))
+                    if index > result:
+                        break
+                if j == 0:
+                    index = element
+            if index == result:
+                if verbose: print("\tResult found, breaking")
+                summary = summary + result
+                break
+            if verbose: print("\t---------------")
     return summary
 
 
 time_start = perf_counter()
-#print("Result of Day {} Part 1: {}".format(current_day, first()))
-print("Result of Day {} Part 2: {}".format(current_day, second()))
+print("Result of Day {} Part 1: {}".format(current_day, first(verbose=False)))
+print("Result of Day {} Part 2: {}".format(current_day, second(verbose=False)))
 time_end = perf_counter()
 print(f'Took {time_end - time_start} seconds')

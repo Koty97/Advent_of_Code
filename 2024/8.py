@@ -63,36 +63,28 @@ def second(verbose=False):
             j = j + 1
         matrix.append(line_matrix)
         i = i + 1
-    print(antennas)
     max_size=49
     for key,value in antennas.items():
         perm = combinations(value,2)
-        for i in perm:
-            distance=get_nodes_distance(i[0],i[1])
-            print("Distance between {} and {} is {}".format(i[0],i[1],distance))
-            new_node=[i[0][0]+distance[0],i[0][1]+distance[1]]
-            print("\tNew node is {}".format(new_node))
-            while 0<=new_node[0]<max_size or 0<=new_node[1]<max_size:
-                if antinodes.count(new_node)==0 and 0 <= new_node[0] < max_size and 0 <= new_node[1] < max_size:
-                    print("\tAppending {}".format(new_node))
-                    antinodes.append(new_node)
-                new_node = [new_node[0] + distance[0], new_node[1] + distance[1]]
-                print("\tNew node is {}".format(new_node))
-
-            new_node = [i[0][0] - distance[0], i[0][1] - distance[1]]
-            print("\tNew node is {}".format(new_node))
-            while 0 <= new_node[0] < max_size or 0 <= new_node[1] < max_size:
-                if antinodes.count(new_node) == 0 and 0 <= new_node[0] < max_size and 0 <= new_node[1] < max_size:
-                    print("\tAppending {}".format(new_node))
-                    antinodes.append(new_node)
-                new_node = [new_node[0] - distance[0], new_node[1] - distance[1]]
-                print("\tNew node is {}".format(new_node))
-    for antenna in antennas.values():
-        for coord in antenna:
-            if antinodes.count(coord)==0:
-                antinodes.append(coord)
+        for antenna in perm:
+            distance=get_nodes_distance(antenna[0],antenna[1])
+            node=antenna[0]
+            if node not in antinodes:
+                antinodes.append(node)
+            while 0<=node[0]<=max_size or 0<=node[1]<=max_size:
+                node = [node[0] + distance[0], node[1] + distance[1]]
+                if 0<=node[0]<=max_size and 0<=node[1]<=max_size and node not in antinodes:
+                    antinodes.append(node)
+                    if verbose: print("Adding {}".format(node))
+            node = antenna[1]
+            if node not in antinodes:
+                antinodes.append(node)
+            while 0 <= node[0] <= max_size or 0 <= node[1] <= max_size:
+                node = [node[0] - distance[0], node[1] - distance[1]]
+                if 0 <= node[0] <= max_size and 0 <= node[1] <= max_size and node not in antinodes:
+                    antinodes.append(node)
+                    if verbose: print("Adding {}".format(node))
     antinodes.sort()
-    print(antinodes)
     return len(antinodes)
 
 

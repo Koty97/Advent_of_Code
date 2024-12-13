@@ -28,24 +28,8 @@ def get_adjacents_first(pos,value,dic,verbose):
                 dic["end"]=[adjacent]
     return adjacents
 
-def get_adjacents_second(pos,value,dic,verbose):
-    #while value<9:
-    adjacents = []
-    #for step in dic[value + 1]:
-    for step in dic[str(value + 1)]:
-        if is_adjacent(pos, step):
-            adjacents.append(step)
-    if verbose: print("\t{} has {} adjacents of value {}: {}".format(pos,len(adjacents), value + 1, adjacents))
-    for adjacent in adjacents:
-        if value+1!=9:
-            get_adjacents_second(adjacent,value+1,dic,verbose)
-        else:
-            if dic.get("end") is not None:
-                if dic.get("end").count(adjacent)==0:
-                    dic["end"].append(adjacent)
-            else:
-                dic["end"]=[adjacent]
-    return adjacents
+
+
 def first(verbose=False):
     file = open("10.input", "r")
     matrix = []
@@ -68,8 +52,23 @@ def first(verbose=False):
         summary=summary+len(dic["end"])
         dic["end"]=[]
     return summary
-
-
+summ=0
+def get_adjacents_second(pos,value,dic,verbose):
+    adjacents = []
+    for step in dic[str(value + 1)]:
+        if is_adjacent(pos, step):
+            adjacents.append(step)
+    if verbose:
+        print("\t{} has {} adjacents of value {}: {}".format(pos,len(adjacents), value + 1, adjacents))
+    for adjacent in adjacents:
+        if value+1!=9:
+            get_adjacents_second(adjacent,value+1,dic,verbose)
+        else:
+            if dic.get("end") is not None:
+                dic["end"]=dic["end"]+1
+            else:
+                dic["end"]=1
+    return adjacents
 def second(verbose=False):
     file = open("10.input", "r")
     matrix = []
@@ -87,15 +86,13 @@ def second(verbose=False):
     for start in dic["0"]:
         if verbose: print("Starting from {}".format(start))
         value = 0
-        get_adjacents(start, value, dic,verbose)
+        get_adjacents_second(start, value, dic,verbose)
         if verbose: print("Ends: {}\n".format(dic["end"]))
-        summary=summary+len(dic["end"])
-        dic["end"]=[]
-    return summary
+    return dic["end"]
 
 
 time_start = perf_counter()
 print("Result of Day {} Part 1: {}".format(current_day, first(verbose=False)))
-print("Result of Day {} Part 2: {}".format(current_day, second()))
+print("Result of Day {} Part 2: {}".format(current_day, second(verbose=False)))
 time_end = perf_counter()
 print(f'Took {time_end - time_start} seconds')
