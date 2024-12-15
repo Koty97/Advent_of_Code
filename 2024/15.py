@@ -156,25 +156,10 @@ def second(verbose=False):
                     free_space=free_space+1
                 box_position = (box_position[0] + (new_player_pos[0] - player_pos[0]),
                                 box_position[1] + (new_player_pos[1] - player_pos[1]))
+            is_break = False
             if free_space>0:
-                for i in range(box_count,0,-1):
-                    box_position = (player_pos[0] + (new_player_pos[0] - player_pos[0])*i,
-                                    player_pos[1] + (new_player_pos[1] - player_pos[1])*i)
-                    if move=="v" or move=="^":
-                        #TODO fix this implementation
-                        if board[box_position[0]][box_position[1]]=="[":
-                            board[box_position[0] + (new_player_pos[0] - player_pos[0])][box_position[1] + (new_player_pos[1] - player_pos[1])+1] = board[box_position[0]][box_position[1]+1]
-                            board[box_position[0]][box_position[1]+1] = "."
-                            pass
-                        elif board[box_position[0]][box_position[1]]=="]":
-                            board[box_position[0] + (new_player_pos[0] - player_pos[0])][box_position[1] + (new_player_pos[1] - player_pos[1])-1] = board[box_position[0]][box_position[1] - 1]
-                            board[box_position[0]][box_position[1] -1] = "."
-                        pass
-                    board[box_position[0]+(new_player_pos[0] - player_pos[0])][box_position[1]+(new_player_pos[1] - player_pos[1])]=board[box_position[0]][box_position[1]]
-                    board[box_position[0]][box_position[1]]="."
-                board[player_pos[0]][player_pos[1]] = board[new_player_pos[0]][new_player_pos[1]]
-                board[new_player_pos[0]][new_player_pos[1]] = "@"
-                player_pos = new_player_pos
+                pass
+            player_pos = new_player_pos
         if verbose: print_board(board)
     return get_rating(board)
 
