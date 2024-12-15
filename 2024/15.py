@@ -161,7 +161,14 @@ def second(verbose=False):
                     box_position = (player_pos[0] + (new_player_pos[0] - player_pos[0])*i,
                                     player_pos[1] + (new_player_pos[1] - player_pos[1])*i)
                     if move=="v" or move=="^":
-
+                        #TODO fix this implementation
+                        if board[box_position[0]][box_position[1]]=="[":
+                            board[box_position[0] + (new_player_pos[0] - player_pos[0])][box_position[1] + (new_player_pos[1] - player_pos[1])+1] = board[box_position[0]][box_position[1]+1]
+                            board[box_position[0]][box_position[1]+1] = "."
+                            pass
+                        elif board[box_position[0]][box_position[1]]=="]":
+                            board[box_position[0] + (new_player_pos[0] - player_pos[0])][box_position[1] + (new_player_pos[1] - player_pos[1])-1] = board[box_position[0]][box_position[1] - 1]
+                            board[box_position[0]][box_position[1] -1] = "."
                         pass
                     board[box_position[0]+(new_player_pos[0] - player_pos[0])][box_position[1]+(new_player_pos[1] - player_pos[1])]=board[box_position[0]][box_position[1]]
                     board[box_position[0]][box_position[1]]="."
