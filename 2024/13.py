@@ -65,13 +65,14 @@ def second(verbose=False):
     for situation in situations:
         if verbose: print("Situation: {}".format(situation))
         gcdx=custom_gcd(int(situation["A"][0]), int(situation["B"][0]),1,0,0,1)
-        gcdy=custom_gcd(int(situation["A"][1]), int(situation["B"][1]),0,0,0,1)
+        gcdy=custom_gcd(int(situation["A"][1]), int(situation["B"][1]),1,0,0,1)
         solutions=[]
         if int(situation["Prize"][0]) % gcdx[0] == 0 and int(situation["Prize"][1]) % gcdy[0] == 0:
             print("\t{}={}*{}+{}*{}".format(gcdx[0], gcdx[1], int(situation["A"][0]), gcdx[2], int(situation["B"][0])))
-            partic=(gcdx[1]*int(situation["Prize"][0]),gcdx[2]*int(situation["Prize"][0]))
+            med=gcdx[1]*int(situation["A"][0])+gcdx[2]*int(situation["B"][0])
+            partic=(gcdx[1]*int(int(situation["Prize"][0])/med),gcdx[2]*int(int(situation["Prize"][0])/med))
             print("\tParticular solution: {}".format(partic))
-            at=int(partic[0]/int(situation["B"][0]))#Problém se znaménkem, proč? Jak změnit
+            at=-int(partic[0]/int(situation["B"][0]))
             bt=int(partic[1]/int(situation["A"][0]))
             if bt>at:
                 temp=bt
@@ -83,12 +84,12 @@ def second(verbose=False):
                 if x>=0 and y>=0:
                     if (x,y) not in solutions:
                         solutions.append((x,y))
-                    print((x,y))
             print("\t----------------")
             print("\t{}={}*{}+{}*{}".format(gcdy[0], gcdy[1], int(situation["A"][1]), gcdy[2], int(situation["B"][1])))
-            partic = (gcdy[1] * int(situation["Prize"][1]), gcdy[2] * int(situation["Prize"][1]))
+            med = gcdy[1] * int(situation["A"][1]) + gcdy[2] * int(situation["B"][1])
+            partic = (gcdy[1] * int(int(situation["Prize"][1]) / med), gcdy[2] * int(int(situation["Prize"][1]) / med))
             print("\tParticular solution: {}".format(partic))
-            at = int(partic[0] / int(situation["B"][1]))  # Problém se znaménkem, proč? Jak změnit
+            at = -int(partic[0] / int(situation["B"][1]))
             bt = int(partic[1] / int(situation["A"][1]))
             if bt > at:
                 temp = bt
@@ -99,7 +100,8 @@ def second(verbose=False):
                 y = partic[1] + (-int(situation["A"][1]) * t)
                 if x >= 0 and y >= 0 and (x,y) in solutions:
                     print((x, y))
-
+                    summary=summary+((3*x)+y)
+                    break
             print("-----------------")
 
     return summary
