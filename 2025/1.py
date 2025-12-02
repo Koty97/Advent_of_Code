@@ -5,7 +5,7 @@ current_day = os.path.basename(__file__.split(".")[0])
 
 
 def first(verbose=False):
-    file = open("1.input", "r")
+    file = open("{}.input".format(current_day), "r")
     pointer = 50
     summary = 0
     for line in file:
@@ -23,10 +23,9 @@ def first(verbose=False):
 
 
 def second(verbose=False):
-    file = open("1.input", "r")
+    file = open("{}.input".format(current_day), "r")
     pointer = 50
     summary = 0
-    divs = []
     for line in file:
         if verbose: print("Reading {}".format(line.strip()))
         mode = line[0]
