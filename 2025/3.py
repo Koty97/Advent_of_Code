@@ -31,38 +31,6 @@ def common(element_count, verbose=False):
         if verbose: print("-------------")
     return summary
 
-
-def first_old(verbose=False):
-    file = open("{}.input".format(current_day), "r")
-    summary = 0
-    for line in file:
-        max_numbers = [0, 0]
-        max_indexes = [0, 0]
-        for i, char in enumerate(line.strip()):
-            if int(char) > max_numbers[0]:
-                if max_numbers[0] > max_numbers[1]:
-                    max_numbers[1] = max_numbers[0]
-                    max_indexes[1] = max_indexes[0]
-                max_numbers[0] = int(char)
-                if i < len(line.strip()) - 1:
-                    max_numbers[1] = 0
-                max_indexes[0] = i
-            elif int(char) > max_numbers[1]:
-                max_numbers[1] = int(char)
-                max_indexes[1] = i
-        if verbose: print("N:", max_numbers)
-        if verbose: print("I:", max_indexes)
-        if max_indexes[0] > max_indexes[1]:
-            temp = max_numbers.pop()
-            max_numbers.append(max_numbers[0])
-            max_numbers[0] = temp
-            if verbose: print("\tFixing order")
-            if verbose: print("N:", max_numbers)
-        summary = summary + int("{}{}".format(max_numbers[0], max_numbers[1]))
-        if verbose: print("--------------")
-    return summary
-
-
 def first(verbose=False):
     return common(2, verbose)
 

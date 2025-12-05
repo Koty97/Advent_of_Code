@@ -57,6 +57,6 @@ def second(verbose=False):
 
 time_start = perf_counter()
 print("Result of Day {} Part 1: {}".format(current_day, first()))
-print("Result of Day {} Part 2: {}".format(current_day, second(verbose=True)))
+print("Result of Day {} Part 2: {}".format(current_day, second()))
 time_end = perf_counter()
 print(f'Took {time_end - time_start} seconds')
